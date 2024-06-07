@@ -10,3 +10,8 @@ Adverse Media suffers from noise because clients and providers fundamentally do 
 
 Our research seeks to answer what "good coverage" looks like in Adverse Media and, in the process, develop tools and datasets that help fill the gap in research and cut through the noise.
 
+## Tools
+
+<ul>
+<li>CountryReporter - is a tool that enables researchers to collate media sources from different sources into  a source of truth. Part of this tool is a research process to guide you from collecting data about media in a country to matching news sites. CountryReporter outputs a report that summarises your Adverse Media coverage the country and a list of domains for review</li>
+<ul>
