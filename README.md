@@ -13,5 +13,7 @@ Our research seeks to answer what "good coverage" looks like in Adverse Media an
 ## Tools
 
 <ul>
-<li>CountryReporter - is a tool that enables researchers to collate media sources from different sources into  a source of truth. Part of this tool is a research process to guide you from collecting data about media in a country to matching news sites. CountryReporter outputs a report that summarises your Adverse Media coverage the country and a list of domains for review</li>
+<li>[CountryReporter](https://gitlab.com/albin.touma/adverse-media/-/tree/main/CountryReporter) is a tool for collating media sources from different directories into a source of truth. Part of this tool is a research process that outlines steps from data collection to matching news sites. CountryReporter outputs a report that summarises your Adverse Media coverage in a country and a list of domains for review.
+
+</li>
 <ul>
