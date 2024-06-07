@@ -1,5 +1,3 @@
-# Country Reporter
-
 <p align="center">
 
 
