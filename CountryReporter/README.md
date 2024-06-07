@@ -1,7 +1,5 @@
 # Country Reporter
 
-## Background 
-
 <p align="center">
 
 
