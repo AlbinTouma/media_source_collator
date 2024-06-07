@@ -1,12 +1,23 @@
-# Adverse Media Counry Review Process
+# Country Reporter
 
 ## Background 
 
-Adverse Media country reviews aim to produce a master list of sources that Comply covers and an estimate of the sources that exist in a country. 
+<p align="center">
 
-The result if a country report with a table of the number of sources we cover by their taxonomy type and the estimated number of sources out there. 
 
-In addition,the report flags domains that we miss and should review and consider adding. 
+  <h3 align="center">📰 Country Reporter</h3>
+
+  <p align="center">
+    Country Reporter is a research tool that collates lists of media sources and reports on the available media sources in a country.
+  </p>
+</p>
+
+
+Country Reporter collates lists of media sources into a master list and outputs a country review. 
+
+The review contains a table of the number of sources that exist in a country by type of media and the parent, child relationship between newspapers.
+
+In addition,the report flags domains that are not covered. These domains are slated for further review.
 
 
 ## Research Process
@@ -31,10 +42,6 @@ The collate and classify steps are repeated until all comply sources have been l
 Throughout the classifying of sources, we often come across domains with similar names or the same name but different url. At present, we manually resolve these sources by ensuring that the name is consistent across all sheets. Upon rerunning collator, these sources are resolved. 
 
 
-
-
-
-
 ```mermaid
 graph LR;
 
@@ -56,3 +63,9 @@ Checks <--> ParentDomain[Parent domain checker]
 Compiler --> MasterList
 MasterList --> CountryReport{Report}
 ```
+
+### Country Review Report
+
+When the above steps are completed,  we breakdown the number of sources that Comply covers by type in a table. This table is then shared with clients along with a few examples of sources from each class.
+
+The table is generated manually. Below the table of sources that Comply covers, the report lists domains that comply does not cover. These domains are slated for review. 
