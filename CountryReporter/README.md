@@ -8,15 +8,15 @@
   </p>
 </p>
 
+<img src="CountryReview.png">
 
-Country Reporter collates lists of media sources into a master list and outputs a country review. 
-
-The review contains a table of the number of sources that exist in a country by type of media and the parent, child relationship between newspapers.
-
-In addition,the report flags domains that are not covered. These domains are slated for further review.
 
 
 ## Research Process
+
+Country Reporter collates lists of media sources into a master list and outputs a country review report. This report type and number of sources that Comply covers; estimated number of sources in a country; and sources slated for review. 
+
+
 
 ### Data Collection
 
