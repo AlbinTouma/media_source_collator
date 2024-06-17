@@ -1,0 +1,25 @@
+newspaper:
+    name:
+      - prop-fr:nom
+      - rdfs:label
+      - foaf:name 
+    
+    language: dbo:language
+
+    type: prop-fr:genre
+
+    founded: prop-fr:dateDeFondation
+
+    distribution: prop-fr:diffusion
+
+    owners: prop-fr:propriétaire
+
+    frequency: prop-fr:périodicité
+
+    website: 
+      - prop-fr:site
+      - foaf:homepage
+
+    region: prop-fr:ville
+
+
