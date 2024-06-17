@@ -2,11 +2,13 @@ import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON, N3
 import yaml
 
-GOOGLE_URL_SHEET  = "https://docs.google.com/spreadsheets/d/1T9QQek-mP3TRBGANprrHPVmEdgi7sxdQXZ84es2fwzg/edit?gid=1832685312#gid=1832685312"
-sparql = SPARQLWrapper("https://fr.dbpedia.org/sparql")
+#Presse écrite régionale en France"@fr;
+#https://fr.dbpedia.org/sparql
 
 
-with open("france.yml") as stream:
+sparql = SPARQLWrapper("https://dbpedia.org/sparql")
+
+with open("en.yml") as stream:
     yml = yaml.safe_load(stream)
     newspaper = yml['newspaper']
 
@@ -21,12 +23,10 @@ def values(key: str, value: str | list) -> str | list[str]:
     return f"\nOPTIONAL{{?papers {value} ?{key}.}}"
 
 
-
-
 def buildQuery(mapping: dict) -> str:
 
     select = "SELECT ?source ?papers "
-    where = """WHERE {\n?source rdfs:label "Presse écrite régionale en France"@fr; \ndbo:wikiPageWikiLink ?papers. \n?papers rdf:type dbo:Newspaper.  """
+    where = """WHERE {\n?source rdfs:label "List of newspapers in the United Kingdom"@en; \ndbo:wikiPageWikiLink ?papers. """
     query = ""
 
     for key, value in mapping.items():
