@@ -6,7 +6,7 @@ newspaper:
     
     language: dbo:language
 
-    type: prop-fr:genre
+    genre: prop-fr:genre
 
     founded: prop-fr:dateDeFondation
 
