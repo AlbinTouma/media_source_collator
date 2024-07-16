@@ -3,21 +3,19 @@ from db.db import connect_to_db
 from psycopg2.extensions import connection
 import pandas as pd
 from io import StringIO
-
+from utils.main import check_articles
 
 uploaded_file = st.file_uploader(label="Upload coverage sheet")
 
 if st.button("Check for articles"):
-    conn: connection | Exception = connect_to_db()
 
-    if uploaded_file is None
-        st.write("⚠️ Upload ayour research workbook")
+    if uploaded_file is None:
+        st.write("⚠️ UPLOAD YOUR WORKBOOK")
         exit()
 
-    uploaded_file = pd.read_excel(uploaded_file, sheet_name="main")
-
+    uploaded_file: pd.DataFrame = pd.read_excel(uploaded_file, sheet_name="main")
+    conn: connection | Exception = connect_to_db()
 
     if conn := connection:
         st.write("✅ - Connected to DB!")
-        st.write(uploaded_file)
-       
+        temp_table = check_articles(uploaded_file, conn)
