@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "adverse-media"
+version = "0.1.0"
+description = ""
+authors = ["Albin Touma <albin.touma@complyadvantage.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+streamlit = "^1.36.0"
+pandas = "^2.2.2"
+numpy = "^2.0.0"
+python-dotenv = "^1.0.1"
+psycopg2 = "^2.9.9"
+openpyxl = "^3.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

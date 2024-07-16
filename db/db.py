@@ -1,14 +1,15 @@
+from dotenv import dotenv_values
 import os
-import pandas as pd
-import glob
+import psycopg2
+import streamlit as st
 
-path = os.getcwd()
-csv_files = glob.glob(os.path.join(path, "*.csv"))
+secrets: dict = dotenv_values(".secrets")
+def connect_to_db():
+    try:
+        conn = psycopg2.connect(database = "article_storage", user = secrets['USERNAME'], host = secrets['HOST'], password = secrets['PASSWORD'], port = secrets['PORT'])
+        return conn
+    except Exception as e:
+        st.write("⚠️WARNING", str(e)) 
+        return e
+    
 
-df = pd.DataFrame()
-for f in csv_files:
-    x = pd.read_csv(f)
-    df = pd.concat([x], axis=0)
-
-df = df[['name','domain', 'provider', 'owners', 'frequency', 'web_site_id', 'created_date', 'updated_date', 'country', 'lat', 'lng']]
-print(df['country'])
