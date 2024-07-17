@@ -1,6 +1,6 @@
 import streamlit as st
-from db.db import connect_to_db 
-from psycopg2.extensions import connection
+from db.db import connect_to_db, create_temporary_table, query_for_mentions 
+from psycopg2.extensions import connection as  Psycopg2Connection
 import pandas as pd
 from io import StringIO
 from utils.main import check_articles
@@ -14,8 +14,10 @@ if st.button("Check for articles"):
         exit()
 
     uploaded_file: pd.DataFrame = pd.read_excel(uploaded_file, sheet_name="main")
-    conn: connection | Exception = connect_to_db()
+    conn: Psycopg2Connection | Exception = connect_to_db()
 
-    if conn := connection:
-        st.write("✅ - Connected to DB!")
-        temp_table = check_articles(uploaded_file, conn)
+    if isinstance(conn, Psycopg2Connection):
+        create_temporary_table("Ireland", conn)
+        sql_result: list[tuple] = query_for_mentions(conn)
+        st.write(sql_result)
+        conn.close()
