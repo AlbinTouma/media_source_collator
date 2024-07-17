@@ -1,5 +1,5 @@
 import streamlit as st
-from db.db import connect_to_db, create_temporary_table, query_for_mentions 
+from db.db import connect_to_db, create_temporary_table, vectorize_searchfield, query_for_mentions 
 from psycopg2.extensions import connection as  Psycopg2Connection
 import pandas as pd
 from io import StringIO
@@ -18,6 +18,9 @@ if st.button("Check for articles"):
 
     if isinstance(conn, Psycopg2Connection):
         create_temporary_table("Ireland", conn)
+        vectorize_searchfield(conn)
         sql_result: list[tuple] = query_for_mentions(conn)
         st.write(sql_result)
+
+
         conn.close()

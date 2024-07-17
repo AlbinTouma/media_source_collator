@@ -4,8 +4,22 @@ import psycopg2
 from psycopg2.extensions import connection as Psycopg2Connection 
 import streamlit as st
 from db.queries import temp_table
+from dataclasses import dataclass, asdict
 
 secrets: dict = dotenv_values(".secrets")
+
+@dataclass
+class ArticleData:
+    uuid: str
+    source_name: str
+    url: str
+    host: str 
+    country: str 
+    article_created_datetime: str
+    collection_datetime: str 
+    publish_datetime: str
+
+
 
 def connect_to_db() -> Psycopg2Connection | Exception:
     st.toast("Connecting to db")
@@ -28,6 +42,24 @@ def create_temporary_table(country_name: str, conn: Psycopg2Connection) -> None:
         conn.rollback()
     finally:
         cur.close()
+
+def vectorize_searchfield(conn: Psycopg2Connection) -> None:
+    cur = conn.cursor()
+    vectorize_query = """ALTER TABLE country_review ADD COLUMN search tsvector;
+    UPDATE country_review SET search = to_tsvector(host)
+    """
+    try:
+        cur.execute(vectorize_query)
+        conn.commit()
+        st.toast("Vectorized domains")
+    except Exception as e:
+        st.toast(f"Failed vectorising domains {e}")
+        conn.rollback()
+
+def find_domain(domain: str, conn: Psycopg2Connection) -> list[tuple]:
+    pass
+
+
 
 def query_for_mentions(conn: Psycopg2Connection) -> list[tuple]:
 
