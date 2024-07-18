@@ -11,14 +11,19 @@ st.set_page_config(
         page_icon="🔬"
 )
 
+
+
+
 st.title("Cartier")
+st.header("Streamline country and quality reviews", divider="rainbow")
 
 """
 
-Cartier is your adverse media helper who streamlines coverage and quality assurance process. Use Cartier to build a master list of the media sources that exist in a country or to anlayse the quality of our adverse media sources in a country.
+Cartier streamlines coverage and quality assurance for adverse media. Use Cartier to build a master list of the media sources that exist in a country or to anlayse the quality of our adverse media sources in a country.
+"""
 
-## Get Started
-
+st.subheader("Get started")
+"""
 Behind Cartier is the adverse media postgres database and ElasticSearch. 
 In order to run Cartier, you must give Cartier your database credentials. Ask an engineer or your product manager for credentials.
 
@@ -43,3 +48,5 @@ if submit_button:
                 f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
         )
         test_db_credentials()
+
+
