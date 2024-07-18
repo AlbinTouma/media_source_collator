@@ -1,0 +1,5 @@
+HOST=rds-article-storage.euw1.df-production-1.ivxs.uk
+PORT=5432
+PASSWORD=JU7ZwbobUQw64KGBSGEC1NFlxKrVw5GcD4ZVF0hG6qEQIQo7
+USERNAME=productro
+                

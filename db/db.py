@@ -26,9 +26,25 @@ def connect_to_db() -> Psycopg2Connection | Exception:
     try:
         conn = psycopg2.connect(database = "article_storage", user = secrets['USERNAME'], host = secrets['HOST'], password = secrets['PASSWORD'], port = secrets['PORT'])
         return conn
+
     except Exception as e:
         st.write("⚠️WARNING", str(e)) 
         return e
+
+
+def test_db_credentials() -> None:
+    st.toast("Checking credentials")
+    try:
+        with psycopg2.connect(
+            database = "article_storage", 
+            user = secrets['USERNAME'], 
+            host = secrets['HOST'], 
+            password = secrets['PASSWORD'], 
+            port = secrets['PORT']
+        ) as conn:
+            st.success("VALID")
+    except Exception as e:
+        st.warning(f"ENSURE CREDENTIALS ARE VALID AND THAT VPN IS ON", icon="🚨")
 
 def create_temporary_table(country_name: str, conn: Psycopg2Connection) -> None:
     cur = conn.cursor()
