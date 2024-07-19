@@ -1,5 +1,4 @@
 import pandas as pd
-import streamlit as st
 from psycopg2.extensions import connection 
 from db.db import create_temporary_table, query_for_mentions
 import streamlit as st

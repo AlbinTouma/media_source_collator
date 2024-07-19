@@ -1,1 +1,3 @@
-.secrets
+*.secrets
+.secrets_source_metadata
+.secrets_articles

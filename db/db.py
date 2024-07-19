@@ -6,7 +6,6 @@ import streamlit as st
 from db.queries import temp_table
 from dataclasses import dataclass, asdict
 
-secrets: dict = dotenv_values(".secrets")
 
 @dataclass
 class ArticleData:
@@ -20,8 +19,17 @@ class ArticleData:
     publish_datetime: str
 
 
+def select_db(db_name: str):
+    if db_name == "Source Metadata":
+        secrets: dict = dotenv_values(".secrets_source_metadata")
+    if db_name == "Articles":
+        secrets: dict = dotenv_values(".secrets_articles")
+    
+    return secrets
 
-def connect_to_db() -> Psycopg2Connection | Exception:
+
+def connect_to_db(db_name: str) -> Psycopg2Connection | Exception:
+    secrets = select_db(db_name)
     st.toast("Connecting to db")
     try:
         conn = psycopg2.connect(database = "article_storage", user = secrets['USERNAME'], host = secrets['HOST'], password = secrets['PASSWORD'], port = secrets['PORT'])
@@ -32,19 +40,21 @@ def connect_to_db() -> Psycopg2Connection | Exception:
         return e
 
 
-def test_db_credentials() -> None:
+def test_db_credentials(db_name) -> None:
+    secrets: dict = select_db(db_name)
     st.toast("Checking credentials")
     try:
-        with psycopg2.connect(
+        conn = psycopg2.connect(
             database = "article_storage", 
             user = secrets['USERNAME'], 
             host = secrets['HOST'], 
             password = secrets['PASSWORD'], 
             port = secrets['PORT']
-        ) as conn:
-            st.success("VALID")
-    except Exception as e:
-        st.warning(f"ENSURE CREDENTIALS ARE VALID AND THAT VPN IS ON", icon="🚨")
+        )
+        st.toast("✅ VALID CREDENTIALS")
+        conn.close()
+    except Exception:
+        st.toast(f"ENSURE CREDENTIALS ARE VALID AND THAT VPN IS ON", icon="🚨")
 
 def create_temporary_table(country_name: str, conn: Psycopg2Connection) -> None:
     cur = conn.cursor()

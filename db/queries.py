@@ -16,3 +16,6 @@ FROM articles_with_mentions
 WHERE country = %s LIMIT 10;
 """
 
+get_db_domains = f"""
+    SELECT * FROM WHERE country = %s limit 1;
+"""

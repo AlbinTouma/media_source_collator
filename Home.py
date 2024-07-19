@@ -32,10 +32,16 @@ In order to run Cartier, you must give Cartier your database credentials. Ask an
 
 Please ensure your VPN is working. 
 
+
+There are two postgres databases in adverse media:
+
+- **Source Metadata** contains all of the domains that we scrape. This is useful for finding the media sources covered by adverse media.
+- **Articles** contains the articles that we scrape. 
+
 Submit correct credentials if warning persists when VPN is on.
 """
-
 form = st.form(key="db")
+database_selector = form.radio("Which database would you like to add your credentials to?", options=["Source Metadata", "Articles"])
 host = form.text_input(label="HOST")
 port = form.text_input(label="PORT")
 user_name = form.text_input(label="USERNAME")
@@ -43,10 +49,19 @@ password = form.text_input(label="PASSWORD", type="password")
 submit_button = form.form_submit_button(label="Submit")
 
 if submit_button:
-    with open(".secrets", "w") as secrets:
-        secrets.write(
-                f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
-        )
-        test_db_credentials()
+    if database_selector == "Source Metadata":
+        with open(".secrets_source_metadata", "w") as secrets:
+            secrets.write(
+                    f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
+            )
+            secrets.close()
+            test_db_credentials(database_selector)
+    if database_selector == "Articles":
+        with open(".secrets_articles", "w") as secrets:
+            secrets.write(
+                    f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
+            )
+            secrets.close()
+            test_db_credentials(database_selector)
 
 
