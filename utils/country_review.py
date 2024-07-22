@@ -6,7 +6,7 @@ from psycopg2.extensions import connection as Psycopg2Connection
 import pandas as pd
 
 def db_get_country_domains(country: str) -> list[tuple] | Exception:
-    conn: Psycopg2Connection | Exception = connect_to_db()
+    conn: Psycopg2Connection | Exception = connect_to_db(db_name='Source Metadata')
     if isinstance(conn, Psycopg2Connection):
         try:
             cur = conn.cursor()
@@ -14,6 +14,7 @@ def db_get_country_domains(country: str) -> list[tuple] | Exception:
             sql_response = cur.fetchall()
             return sql_response
         except Exception as e:
+            st.warning(str(e))
             conn.rollback()
         finally:
             conn.close()

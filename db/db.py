@@ -32,7 +32,7 @@ def connect_to_db(db_name: str) -> Psycopg2Connection | Exception:
     secrets = select_db(db_name)
     st.toast("Connecting to db")
     try:
-        conn = psycopg2.connect(database = "article_storage", user = secrets['USERNAME'], host = secrets['HOST'], password = secrets['PASSWORD'], port = secrets['PORT'])
+        conn = psycopg2.connect(database = secrets["DATABASE"] , user = secrets['USERNAME'], host = secrets['HOST'], password = secrets['PASSWORD'], port = secrets['PORT'])
         return conn
 
     except Exception as e:
@@ -45,7 +45,7 @@ def test_db_credentials(db_name) -> None:
     st.toast("Checking credentials")
     try:
         conn = psycopg2.connect(
-            database = "article_storage", 
+            database = secrets['DATABASE'], 
             user = secrets['USERNAME'], 
             host = secrets['HOST'], 
             password = secrets['PASSWORD'], 
@@ -53,8 +53,10 @@ def test_db_credentials(db_name) -> None:
         )
         st.toast("✅ VALID CREDENTIALS")
         conn.close()
-    except Exception:
+    except Exception as e:
         st.toast(f"ENSURE CREDENTIALS ARE VALID AND THAT VPN IS ON", icon="🚨")
+        st.exception(e)
+        st.warning("Have you checked your VPN and credentials?")
 
 def create_temporary_table(country_name: str, conn: Psycopg2Connection) -> None:
     cur = conn.cursor()

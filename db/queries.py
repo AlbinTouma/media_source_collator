@@ -17,5 +17,5 @@ WHERE country = %s LIMIT 10;
 """
 
 get_db_domains = f"""
-    SELECT * FROM WHERE country = %s limit 1;
+    SELECT * FROM country WHERE name = %s LIMIT 2;
 """

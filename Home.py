@@ -47,21 +47,26 @@ port = form.text_input(label="PORT")
 user_name = form.text_input(label="USERNAME")
 password = form.text_input(label="PASSWORD", type="password")
 submit_button = form.form_submit_button(label="Submit")
+fields = [host, port, user_name, password]
+
 
 if submit_button:
-    if database_selector == "Source Metadata":
-        with open(".secrets_source_metadata", "w") as secrets:
-            secrets.write(
-                    f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
-            )
-            secrets.close()
-            test_db_credentials(database_selector)
-    if database_selector == "Articles":
-        with open(".secrets_articles", "w") as secrets:
-            secrets.write(
-                    f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"'
-            )
-            secrets.close()
-            test_db_credentials(database_selector)
+    if any(field == "" for field in fields):
+        st.error("❌ Missing field!")
+    else:
+        if database_selector == "Source Metadata":
+            with open(".secrets_source_metadata", "w") as secrets:
+                secrets.write(
+                        f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"\nDATABASE="metadata"'
+                )
+                secrets.close()
+                test_db_credentials(database_selector)
+        if database_selector == "Articles":
+            with open(".secrets_articles", "w") as secrets:
+                secrets.write(
+                        f'HOST="{host}"\nPORT="{port}"\nPASSWORD="{password}"\nUSERNAME="{user_name}"\nDATABASE="article_storage"'
+                )
+                secrets.close()
+                test_db_credentials(database_selector)
 
 

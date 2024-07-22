@@ -24,7 +24,5 @@ st.write("Extract domains from Comply Advantage db")
 query_comply_country = st.button(label="Get domains")
 
 if query_comply_country:
-    country_data: list[tuple] = db_get_country_domains(query_comply_country)
+    country_data: list[tuple] = db_get_country_domains(selected_country)
     st.write(country_data)
-
-
