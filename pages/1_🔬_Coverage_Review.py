@@ -4,7 +4,6 @@ from utils.country_review import db_get_country_domains, excel_writer, init_work
 import pandas as pd
 from io import BytesIO
 from utils.db_pedia import get_db_data
-import openpyxl
 
 st.set_page_config(
         page_title="Coverage research",
@@ -25,8 +24,8 @@ countries = [i.name for i in pycountry.countries]
 with st.form("init_research"):
     country_selectbox = st.selectbox(label="Select country to research", options=countries, index=None, placeholder="Select Country for Review")
     uploaded_file = st.file_uploader("Upload existing research sheet", type=['xlsx'])
-    st.subheader("Create or upload worksheet")
-    create_worksheet_btn = st.form_submit_button("Create worksheet")
+    st.subheader("Create or upload workbook")
+    create_worksheet_btn = st.form_submit_button("Create workbook", use_container_width=True)
             
 # Create worksheet
 if create_worksheet_btn:
@@ -97,25 +96,25 @@ st.checkbox("Ensure that every newspaper has a name. We collate media sources in
 st.checkbox("Label sources using the Adverse Media Taxonomy")
 
 
+match_btn = st.button(label="Create source of truth", use_container_width=True)
 
+st.write("Download your research sheet")
 
-
-match_btn = st.button(label="Create master list")
 if match_btn:
     master_sheet: pd.DataFrame | None = collate_sources(st.session_state.workbook)
     if master_sheet.empty:
         st.stop()
-
-    st.write(master_sheet)
-    st.write(type(master_sheet))
     st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="main", df=master_sheet)
 
-st.header("Download", divider="rainbow")
+
 
 
 st.download_button(
-    label="Download research sheet", 
-    data=st.session_state.workbook, 
-    file_name=f"AM Coverage in {country_selectbox}.xlsx", 
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+        label="Download research sheet", 
+        data=st.session_state.workbook, 
+        file_name=f"AM Coverage in {country_selectbox}.xlsx", 
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        use_container_width=True,
+    )
+
+
