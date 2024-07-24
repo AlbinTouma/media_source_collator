@@ -17,7 +17,7 @@ newspaper:
 
     frequency: dbp:type
 
-    website: dbp:website 
+    domain: dbp:website 
 
     region: dbp:country
 

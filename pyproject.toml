@@ -16,6 +16,9 @@ openpyxl = "^3.1.5"
 pycountry = "^24.6.1"
 sparqlwrapper = "^2.0.0"
 pyyaml = "^6.0.1"
+fuzzywuzzy = "^0.18.0"
+regex = "^2024.5.15"
+black = "^24.4.2"
 
 
 [build-system]

@@ -67,7 +67,6 @@ def create_dataframe(qres: dict) -> pd.DataFrame | None:
     
 
 
-
 def get_db_data(yaml_file: str, query: str, language: str, endpoint: str) -> pd.DataFrame | None:
     mappings: dict = open_mappings(yaml_file)
     sparsql: str = buildQuery(mappings, query, language)

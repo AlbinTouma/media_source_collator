@@ -16,7 +16,7 @@ newspaper:
 
     frequency: prop-fr:périodicité
 
-    website: 
+    domain: 
       - prop-fr:site
       - foaf:homepage
 

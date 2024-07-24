@@ -1,6 +1,6 @@
 import streamlit as st
 import pycountry
-from utils.country_review import db_get_country_domains, excel_writer, init_workbook 
+from utils.country_review import db_get_country_domains, excel_writer, init_workbook, collate_sources 
 import pandas as pd
 from io import BytesIO
 from utils.db_pedia import get_db_data
@@ -61,9 +61,9 @@ if query_comply_btn:
         st.stop()
     country_code = pycountry.countries.get(name=country_selectbox).alpha_2 
     sql_response_country: pd.DataFrame = db_get_country_domains(country_code)
+    st.write(sql_response_country)
     st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="comply", df=sql_response_country)
-
-
+    st.toast("Successfully loaded comply data")
 
 if dbPedia_btn:
     match dbPedia_lang:
@@ -82,8 +82,37 @@ if dbPedia_btn:
     st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="wikipedia", df=dbPedia_response)
     st.dataframe(dbPedia_response)
 
+st.header("Matching", divider="rainbow")
+st.markdown("""
+
+### Steps
+
+We need to validate the data in our worksheets before collating them into a master list. This part of the process requires that you label your media sources and clean your worksheets by making sure that each media sources has a name.
+
+### Checklist
+
+""")
+
+st.checkbox("Ensure that every newspaper has a name. We collate media sources into one list by matching sources by their names. ")
+st.checkbox("Label sources using the Adverse Media Taxonomy")
+
+
+
+
+
+match_btn = st.button(label="Create master list")
+if match_btn:
+    master_sheet: pd.DataFrame | None = collate_sources(st.session_state.workbook)
+    if master_sheet.empty:
+        st.stop()
+
+    st.write(master_sheet)
+    st.write(type(master_sheet))
+    st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="main", df=master_sheet)
 
 st.header("Download", divider="rainbow")
+
+
 st.download_button(
     label="Download research sheet", 
     data=st.session_state.workbook, 

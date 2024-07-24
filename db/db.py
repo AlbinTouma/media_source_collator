@@ -41,6 +41,7 @@ def connect_to_db(db_name: str) -> Psycopg2Connection | Exception:
 
 
 def test_db_credentials(db_name) -> None:
+    """Try to connect to db. Toasts success/warning if credentials provided are correct/incorrect.""" 
     secrets: dict = select_db(db_name)
     st.toast("Checking credentials")
     try:
