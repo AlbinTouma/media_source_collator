@@ -18,20 +18,30 @@
 
 ## Research Process
 
-The research process involves identifying lists of media sources in a country and labelling those sources according to our taxonomy, and compiling a master list. 
+Country Reporter collates lists of media sources into a master list and outputs a country review report. This report type and number of sources that Comply covers; estimated number of sources in a country; and sources slated for review. 
 
-Below is a diagram of each research step. Repeat these steps until every media source in each research sheets has a taxonomy label.
+
 
 ```mermaid
 graph LR;
 
-DBPedia("DBPedia scraper") --> B[Add each list of sources in its own Excel tab]
+DBPedia("DBPedia scraper") --> B[Source lists]
 Comply("Comply Articles DB Store") --> B
 GovernmentDirectory(Government sources) --> B
 Other(Other scrapers) --> B
-B --> Taxonomy[Label media sources according to taxonomy]
-Taxonomy --> Compiler[Compile sources in a master list]
-Compiler --> CountryReport{Country Report}
+
+B --> Taxonomy{Taxonomy} --> Label(Class sources)
+
+
+Label --> Compiler{Collator}
+Compiler --> Taxonomy
+
+Compiler <--> Checks{Checks}
+Checks <--> Manual[Manual resolution of soruces]
+Checks <--> ParentDomain[Parent domain checker]
+
+Compiler --> MasterList
+MasterList --> CountryReport{Report}
 ```
 
 
