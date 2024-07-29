@@ -154,7 +154,7 @@ def collate_sheets(worksheets: dict) -> pd.DataFrame | None:
         merged_df = concat_data.groupby("match_name").agg(tuple).applymap(list).reset_index()
         return merged_df
     except Exception as e:
-        st.write(e)
+        st.toast(f"⚠️ Failed to collate {e}")
 
 
 def collate_sources(workbook: BytesIO) -> pd.DataFrame | None:
@@ -170,4 +170,5 @@ def collate_sources(workbook: BytesIO) -> pd.DataFrame | None:
     
     worksheets: dict = match_names_domains(worksheets)
     df: pd.DataFrame | None = collate_sheets(worksheets) 
+    st.toast("✔️ Successfully collated sources")
     return df

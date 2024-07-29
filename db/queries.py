@@ -13,9 +13,14 @@ CREATE TEMPORARY TABLE country_review (
 INSERT INTO country_review
 SELECT uuid, source_name, url, host, country, article_created_datetime, collection_datetime, publish_datetime
 FROM articles_with_mentions
-WHERE country = %s LIMIT 10;
+WHERE country = %s;
 """
 
 get_db_domains = f"""
-    SELECT * FROM website WHERE country = %s LIMIT 2;
+    SELECT * FROM website WHERE country = %s;
 """
+
+find_article = f"""
+SELECT * from incoming_articles where host like %s and title like %s;
+"""
+
