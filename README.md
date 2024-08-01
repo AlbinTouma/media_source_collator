@@ -14,6 +14,21 @@
 
 **Cartier** is a tool designed to assist the adverse media team conduct thorough country reviews by collating and comparing media sources against the domains covered by Comply Advantage. 
 
+## Get started
+
+Build the docker image.
+
+```
+docker build -t Cariter-app .
+
+```
+
+Run the docker image
+
+```
+docker run -p 8501:8501 Cartier-app
+
+```
 
 
 ## Research Process
