@@ -19,7 +19,7 @@
 Build the docker image.
 
 ```
-docker build -t Cariter-app .
+docker build -t Cartier-app .
 
 ```
 
