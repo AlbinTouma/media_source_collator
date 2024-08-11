@@ -7,18 +7,6 @@ from db.queries import temp_table
 from dataclasses import dataclass, asdict
 
 
-@dataclass
-class ArticleData:
-    uuid: str
-    source_name: str
-    url: str
-    host: str 
-    country: str 
-    article_created_datetime: str
-    collection_datetime: str 
-    publish_datetime: str
-
-
 def select_db(db_name: str):
     if db_name == "Source Metadata":
         secrets: dict = dotenv_values(".secrets_source_metadata")
@@ -84,11 +72,6 @@ def vectorize_searchfield(conn: Psycopg2Connection) -> None:
     except Exception as e:
         st.toast(f"Failed vectorising domains {e}")
         conn.rollback()
-
-def find_domain(domain: str, conn: Psycopg2Connection) -> list[tuple]:
-    pass
-
-
 
 def query_for_mentions(conn: Psycopg2Connection) -> list[tuple]:
 
