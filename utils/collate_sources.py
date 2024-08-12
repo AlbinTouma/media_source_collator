@@ -4,6 +4,7 @@ from db.db import connect_to_db
 from db.queries import get_db_domains
 from psycopg2.extensions import connection as Psycopg2Connection
 import pandas as pd
+import numpy as np
 from io import BytesIO
 from openpyxl import load_workbook
 import openpyxl
@@ -84,6 +85,16 @@ def collate_sheets(worksheets: dict) -> pd.DataFrame | None:
     except Exception as e:
         st.toast(f"⚠️ Failed to collate {e}")
 
+def tidy_taxonomy_col(lst):
+    #Remove NaN values (floats)
+    lst = [x for x in lst if not (isinstance(x, float) and np.isnan(x))]
+    
+    #Remove None values
+    lst = [x for x in lst if x not in ["None",None, ""]]
+
+    #Remove duplicates and convert to comma-separated string
+    unique = set(lst)
+    return ", ".join(str(item) for item in unique)
 
 def collate_sources(workbook: BytesIO) -> pd.DataFrame | None:
     '''
@@ -110,5 +121,9 @@ def collate_sources(workbook: BytesIO) -> pd.DataFrame | None:
     
     worksheets: dict = match_names_domains(worksheets)
     df: pd.DataFrame | None = collate_sheets(worksheets) 
+
+    if all(col in df.columns for col in ['taxonomy']):
+        df['taxonomy'] = df['taxonomy'].apply(lambda x: tidy_taxonomy_col(x))
+
     st.toast("✔️ Successfully collated sources")
     return df
