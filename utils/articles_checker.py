@@ -17,7 +17,6 @@ def country_code_validator(codes: pd.Series) -> str | None:
     else:
         return None
 
-
 def check_articles(uploaded_file: pd.DataFrame, conn: connection | Exception):
     uploaded_file['country']: pd.Series[list] = uploaded_file['country'].apply(lambda x: literal_eval(x.replace('nan', 'None')))
     country_code: str | None = country_code_validator(uploaded_file['country'])
@@ -30,4 +29,3 @@ def check_articles(uploaded_file: pd.DataFrame, conn: connection | Exception):
     st.toast("Querying data")
     sql_result: list = query_for_mentions(conn)
     st.write(sql_result)
-

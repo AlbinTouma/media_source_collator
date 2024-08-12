@@ -1,8 +1,10 @@
 import streamlit as st
-import pycountry
-from utils.country_review import db_get_country_domains, excel_writer, init_workbook, collate_sources 
 import pandas as pd
+import pycountry
 from io import BytesIO
+from db.db import db_get_country_domains 
+from utils.collate_sources import collate_sources
+from utils.excel import excel_writer, init_workbook
 from utils.db_pedia import get_db_data
 
 st.set_page_config(
@@ -10,17 +12,14 @@ st.set_page_config(
         page_icon="🔬"
 )
 
+st.title("Country Reviews")
+st.header("Get started", divider="rainbow")
+
 # Initialise workbook in session memory
 if "workbook" not in st.session_state:
     st.session_state.workbook = init_workbook()
 
-
-st.title("Country Reviews")
-st.header("Get started", divider="rainbow")
-
-
 countries = [i.name for i in pycountry.countries]
-
 with st.form("init_research"):
     country_selectbox = st.selectbox(label="Select country to research", options=countries, index=None, placeholder="Select Country for Review")
     uploaded_file = st.file_uploader("Upload existing research sheet", type=['xlsx'])
@@ -40,19 +39,12 @@ if create_worksheet_btn:
             st.session_state.workbook = init_workbook(uploaded_file)
             st.toast("Workbook uploaded successfully")
 
-
 st.header("Get data", divider="rainbow")
-st.subheader("Comply") 
 
+# Get data from Comply Advantage ---------------------
+st.subheader("Comply") 
 with st.form("Comply Advantage"):
     query_comply_btn = st.form_submit_button(label="Populate Comply worksheet")
-    
-st.subheader("Wikipedia") 
-with st.form("DbPedia"):
-    dbPedia_lang = st.radio("Language", ["English", "French"], horizontal=True)
-    dbPedia_query = st.text_input(label="Name of wikipedia page")
-    dbPedia_btn = st.form_submit_button(label="Populate Wikipedia worksheet")
-
 
 if query_comply_btn:
     if country_selectbox is None:
@@ -64,6 +56,13 @@ if query_comply_btn:
     st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="comply", df=sql_response_country)
     st.toast("Successfully loaded comply data")
 
+# Get Wikipedia data ------------------
+st.subheader("Wikipedia") 
+with st.form("DbPedia"):
+    dbPedia_lang = st.radio("Language", ["English", "French"], horizontal=True)
+    dbPedia_query = st.text_input(label="Name of wikipedia page")
+    dbPedia_btn = st.form_submit_button(label="Populate Wikipedia worksheet")
+
 if dbPedia_btn:
     match dbPedia_lang:
         case "English":
@@ -73,6 +72,8 @@ if dbPedia_btn:
         case "French":
             yaml_file = "fr.yml"
             lng = "@fr"
+            endpoint = "https://fr.dbpedia.org/sparql"
+
 
     dbPedia_response: pd.DataFrame | None = get_db_data(yaml_file, dbPedia_query, lng, endpoint)
     if dbPedia_response.empty:
@@ -96,19 +97,7 @@ st.checkbox("Ensure that every newspaper has a name. We collate media sources in
 st.checkbox("Label sources using the Adverse Media Taxonomy")
 
 
-match_btn = st.button(label="Create source of truth", use_container_width=True)
-
 st.write("Download your research sheet")
-
-if match_btn:
-    master_sheet: pd.DataFrame | None = collate_sources(st.session_state.workbook)
-    if master_sheet.empty:
-        st.stop()
-    st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="main", df=master_sheet)
-
-
-
-
 st.download_button(
         label="Download research sheet", 
         data=st.session_state.workbook, 
@@ -116,5 +105,19 @@ st.download_button(
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         use_container_width=True,
     )
+
+match_btn = st.button(label="Create source of truth", use_container_width=True)
+
+
+if match_btn:
+    master_sheet: pd.DataFrame | None = collate_sources(st.session_state.workbook)
+    if master_sheet.empty:
+        st.stop()
+    st.session_state.workbook = excel_writer(workbook_stream=st.session_state.workbook, sheet_name="main", df=master_sheet)
+
+    st.write("Your source of truth:")
+    st.write(master_sheet)
+
+
 
 
