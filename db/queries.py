@@ -16,11 +16,10 @@ FROM articles_with_mentions
 WHERE country = %s;
 """
 
-get_db_domains = f"""
-    SELECT * FROM website WHERE country = %s;
-"""
-
 find_article = f"""
 SELECT * from incoming_articles where host like %s and title like %s;
 """
 
+get_db_domains = f"""
+    SELECT * FROM website WHERE country = %s;
+"""

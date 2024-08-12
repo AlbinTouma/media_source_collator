@@ -1,13 +1,12 @@
 from dotenv import dotenv_values
-import os
+import pandas as pd
 import psycopg2
 from psycopg2.extensions import connection as Psycopg2Connection 
 import streamlit as st
-from db.queries import temp_table
-from dataclasses import dataclass, asdict
-
+from db.queries import get_db_domains
 
 def select_db(db_name: str):
+    """Selects the correct .secrets file depending on the db selected"""    
     if db_name == "Source Metadata":
         secrets: dict = dotenv_values(".secrets_source_metadata")
     if db_name == "Articles":
@@ -17,6 +16,7 @@ def select_db(db_name: str):
 
 
 def connect_to_db(db_name: str) -> Psycopg2Connection | Exception:
+    """Connect to Postgres db. Returns conn or exception"""
     secrets = select_db(db_name)
     st.toast("Connecting to db")
     try:
@@ -46,6 +46,33 @@ def test_db_credentials(db_name) -> None:
         st.toast(f"ENSURE CREDENTIALS ARE VALID AND THAT VPN IS ON", icon="🚨")
         st.exception(e)
         st.warning("Have you checked your VPN and credentials?")
+
+
+def db_get_country_domains(country: str) -> list[tuple] | Exception:
+    """This fetches the domains from SourceMetadata table for a given country"""
+    
+    conn: Psycopg2Connection | Exception = connect_to_db(db_name="Source Metadata")
+    if isinstance(conn, Psycopg2Connection):
+        try:
+            cur = conn.cursor()
+            cur.execute(get_db_domains, (country,))
+            sql_response = cur.fetchall()
+            colnames = [desc[0] for desc in cur.description]
+            return pd.DataFrame(sql_response, columns=colnames)
+        except Exception as e:
+            st.warning(str(e))
+            conn.rollback()
+        finally:
+            conn.close()
+
+''''
+
+The functions below would be part of looking at how many articles we're scraping per domain, how many articles have mentions and other aggregations.
+
+To do these aggregations we: 
+    1. Create a temporary table on a country in the articles with mentions table
+    2 .Run aggregations against the temp table
+
 
 def create_temporary_table(country_name: str, conn: Psycopg2Connection) -> None:
     cur = conn.cursor()
@@ -86,3 +113,5 @@ def query_for_mentions(conn: Psycopg2Connection) -> list[tuple]:
         return e
     finally:
         cur.close()
+
+'''

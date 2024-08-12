@@ -3,7 +3,6 @@ from db.db import test_db_credentials
 from psycopg2.extensions import connection as  Psycopg2Connection
 import pandas as pd
 from io import StringIO
-from utils.main import check_articles
 
 
 st.set_page_config(
