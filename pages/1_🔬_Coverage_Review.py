@@ -98,14 +98,6 @@ st.checkbox("Label sources using the Adverse Media Taxonomy")
 
 
 st.write("Download your research sheet")
-st.download_button(
-        label="Download research sheet", 
-        data=st.session_state.workbook, 
-        file_name=f"AM Coverage in {country_selectbox}.xlsx", 
-        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        use_container_width=True,
-    )
-
 match_btn = st.button(label="Create source of truth", use_container_width=True)
 
 
@@ -119,5 +111,13 @@ if match_btn:
     st.write(master_sheet)
 
 
+
+st.download_button(
+        label="Download research sheet", 
+        data=st.session_state.workbook, 
+        file_name=f"AM Coverage in {country_selectbox}.xlsx", 
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        use_container_width=True,
+    )
 
 
