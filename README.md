@@ -12,68 +12,7 @@
 
 ## Overview
 
-**Cartier** is a tool designed to assist country coverage reviews by collating and comparing media sources. 
-
-
-## Get started
-
-### 🐧 Set up linux for Windows
-
-In order to install Cartier and Docker, make sure you have windows subsystem for Linux installed (WSL). 
-Follow Microsoft's instructions to set up WSL. 
-
-- https://learn.microsoft.com/en-us/windows/wsl/install
-
-WSL should install with the following command in Windows PowerShell.
-
-```
-wsl --install
-```
-## 🐳 Install Docker
-
-You can download Docker Desktop from the official website. Choose Windows - x86_64. 
-
-- https://docs.docker.com/desktop/install/windows-install/
-
-You can also download and install Docker Desktop from PowerShell with this command:
-
-```
-Start-Process 'Docker Desktop Installer.exe' -Wait install
-```
-
-Once you have Docker Desktop up an running, go to settings and select **Use WSL2 based engine** from the General tab. Select **Apply & Restart**.
-
-Docker commands should now work from Windows using the WSL2 engine. 
-
-Open up PowerShell and run:
-
-```
-docker run hello-world .
-```
-
-
-For more information about how to set up Docker with WSL, follow instructions on this page:
-
-- https://docs.docker.com/desktop/wsl/
-
-
-## 📰 Install Cartier
-
-Contact your team leader to send you an invite to the repo with ownership permissions. Create your github account and clone the repo.
-
-
-```
-https://github.com/AlbinTouma/media_source_collator
-```
-
-Cd into the repository and build the docker image with:
-
-```
-docker-compose up --build
-```
-
-This should install an image of the programme complete with Python, poetry, and dependencies. 
-
+**Cartier** is a tool designed to assist country coverage reviews by collating and comparing media sources.
 
 ## Research Process
 
@@ -154,6 +93,65 @@ Provider | Name | URL | Circulation | Taxonomy
 ## Country Review Report
 
 When the above steps are completed,  we breakdown the number of sources that client covers by type in a table. This table is then shared with clients along with a few examples of sources from each class.
+
+## Get started
+
+### 🐧 Set up linux for Windows
+
+In order to install Cartier and Docker, make sure you have windows subsystem for Linux installed (WSL). 
+Follow Microsoft's instructions to set up WSL. 
+
+- https://learn.microsoft.com/en-us/windows/wsl/install
+
+WSL should install with the following command in Windows PowerShell.
+
+```
+wsl --install
+```
+## 🐳 Install Docker
+
+You can download Docker Desktop from the official website. Choose Windows - x86_64. 
+
+- https://docs.docker.com/desktop/install/windows-install/
+
+You can also download and install Docker Desktop from PowerShell with this command:
+
+```
+Start-Process 'Docker Desktop Installer.exe' -Wait install
+```
+
+Once you have Docker Desktop up an running, go to settings and select **Use WSL2 based engine** from the General tab. Select **Apply & Restart**.
+
+Docker commands should now work from Windows using the WSL2 engine. 
+
+Open up PowerShell and run:
+
+```
+docker run hello-world .
+```
+
+
+For more information about how to set up Docker with WSL, follow instructions on this page:
+
+- https://docs.docker.com/desktop/wsl/
+
+
+## 📰 Install Cartier
+
+Contact your team leader to send you an invite to the repo with ownership permissions. Create your github account and clone the repo.
+
+
+```
+https://github.com/AlbinTouma/media_source_collator
+```
+
+Cd into the repository and build the docker image with:
+
+```
+docker-compose up --build
+```
+
+This should install an image of the programme complete with Python, poetry, and dependencies. 
 
 
 
