@@ -4,7 +4,7 @@
   <h3 align="center">📰 Cartier </h3>
 
   <p align="center">
-    Cartier is the Adverse Media team's research tool for conducting country reviews
+    Cartier is aresearch tool for conducting country reviews of media sources.
   </p>
 </p>
 
@@ -12,7 +12,7 @@
 
 ## Overview
 
-**Cartier** is a tool designed to assist the adverse media team conduct thorough country reviews by collating and comparing media sources against the domains covered by Comply Advantage. 
+**Cartier** is a tool designed to assist country coverage reviews by collating and comparing media sources. 
 
 
 ## Get started
@@ -61,8 +61,9 @@ For more information about how to set up Docker with WSL, follow instructions on
 
 Contact your team leader to send you an invite to the repo with ownership permissions. Create your github account and clone the repo.
 
+
 ```
-git clone https://gitlab.com/albintouma_comply/adverse-media.git
+https://github.com/AlbinTouma/media_source_collator
 ```
 
 Cd into the repository and build the docker image with:
@@ -84,7 +85,7 @@ Below is a diagram of each research step. Repeat these steps until every media s
 graph LR;
 
 DBPedia("DBPedia scraper") --> B[Add each list of sources in its own Excel tab]
-Comply("Comply Articles DB Store") --> B
+Own("Own Articles DB Store") --> B
 GovernmentDirectory(Government sources) --> B
 Other(Other scrapers) --> B
 B --> Taxonomy[Label media sources according to taxonomy]
@@ -95,18 +96,20 @@ Compiler --> CountryReport{Country Report}
 
 ### Data Collection
 
-We have a list of sources in comply data that we want to compare to "what's out there". Sources that can tell us what media exists in a country range from open source directories, government directories (usually press ombudsman) and DBPedia.
+My client had a list of sources that they wanted to compare to "what's out there". 
 
-At the collection stage we use or build scrapers and save each list of sources in tabs on the research sheet.
+Sources that can tell us what media exists in a country range from open source directories, government directories (usually press ombudsman) and DBPedia.
+
+At the collection stage I use scrapers and save each list of sources in tabs on the research sheet.
 
 
 ### Taxonomy & Collation
 
 We have a taxonomy of media sources. Classifying sources is a two step process. We classify sources in the different sheets, starting with the dataset that is easiest to classify. For example, media ombudsman sources and wikipedia usually list which sources are national or regional. Once we have classified those sources, we run the collator to create a master list. 
 
-With the help of the master list, we can filter for sources in the comply list that did not merge with sources that have a classification. These domains are then manually classified. 
+With the help of the master list, we can filter for sources in the client's list that did not merge with sources that have a classification. These domains are then manually classified. 
 
-The collate and classify steps are repeated until all comply sources have been labelled. 
+The collate and classify steps are repeated until all client sources have been labelled. 
 
 By collating sources, we avoid labelling domains twice in different sheets and we can identify domains that have not been labelled or have been labelled differently in different worksheets. If a domain has two different labels, revisit this domain and correct the mistake.
 
@@ -128,11 +131,11 @@ MATCH --- FALSE --> reject
 
 **Example**
 
-Comply data
+Client data
 
 Provider | Name | URL | Taxonomy
 -----|---- | ---- | ----
-comply | The Guardian | https://www.guardian.com | international newspaper
+client | The Guardian | https://www.guardian.com | international newspaper
 
 Wiki data
 
@@ -146,11 +149,11 @@ Source B:
 
 Provider | Name | URL | Circulation | Taxonomy
 -----| -----|----|---- | -----
-[comply, wikipedia] | The Guardian | https://www.guardian.com | 20000 | [international newspaper, international newspaper]
+[client, wikipedia] | The Guardian | https://www.guardian.com | 20000 | [international newspaper, international newspaper]
 
 ## Country Review Report
 
-When the above steps are completed,  we breakdown the number of sources that Comply covers by type in a table. This table is then shared with clients along with a few examples of sources from each class.
+When the above steps are completed,  we breakdown the number of sources that client covers by type in a table. This table is then shared with clients along with a few examples of sources from each class.
 
 
 
